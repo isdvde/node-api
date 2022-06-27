@@ -29,7 +29,7 @@ var server = http.createServer(app);
 
 async function main() {
 
-	await db.sync({ force: true });
+	// await db.sync({ force: true });
 
  	server.listen(port);
  	server.on('error', onError);

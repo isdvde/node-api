@@ -1,0 +1,50 @@
+<%- include('../layouts/header', {titulo: 'Usuario'}); %>
+
+<div class="container my-4">
+	<div class="row">
+		<h1 class="text-center">Usuarios</h1>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row mx-auto">
+		<div class="col-6 mx-auto">
+			<table class="table">
+				<thead class="text-center">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Nombre</th>
+						<th scope="col">Password</th>
+						<th scope="col">Accion</th>
+					</tr>
+				</thead>
+				<tbody class="text-center" >
+					<% usuarios.forEach(u => {; %>
+					<tr>
+						<th scope="row"><%=u.id%></th>
+						<td><%=u.nombre%></td>
+						<td><%=u.pass%></td>
+						<td>
+							<!-- <div class="row"> -->
+
+								<div class="col mx-0">
+									
+									<a href="/usuario/edit/<%=u.id%>" class="btn btn-primary">Editar</a>
+								</div>
+								<div class="col">
+									<form action="/usuario/delete/<%=u.id%>" method="delete">
+										
+										<button action="submit" class="btn btn-danger" >Borar</button>
+										<!-- <a href="/usuario/delete/<%#u.id%>"</a></a></a> class="btn btn-danger">Borrar</a> -->
+									</form>
+								</div>
+							<!-- </div> -->
+						</td>
+					</tr>
+					<%});%>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<%- include('../layouts/footer'); %>

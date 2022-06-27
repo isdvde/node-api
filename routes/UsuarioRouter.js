@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-const {index, create, update, destroy} = require('../controllers/UsuarioController.js');
+const UsuarioController = require('../controllers/UsuarioController.js');
 
-router.get('/', index);
-router.post('/create', create);
-router.put('/update/:id', update);
-router.delete('/delete/:id', destroy);
+router.get('/', UsuarioController.index);
+router.post('/create', UsuarioController.create);
+router.put('/update/:id', UsuarioController.update);
+router.delete('/delete/:id', UsuarioController.destroy);
 
 module.exports = router;

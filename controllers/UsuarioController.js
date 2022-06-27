@@ -3,6 +3,11 @@ const { check, validationResult } = require('express-validator');
 
 module.exports = {
 
+	validation: [
+		check('nombre').exists(),
+		check('pass').exists(),
+	],
+	
 	index: async (req, res) => {
 		const u = await Usuario.findAll({
 			order: [
@@ -13,14 +18,20 @@ module.exports = {
 		res.render('usuario/index', {usuarios: u});
 	},
 
-	create: async (req, res) => {
+	store: async (req, res) => {
 		try {
-			await Usuario.create({
-				nombre: req.body.nombre,
-				pass: req.body.pass,
-			});
-
-			res.send('Usuario creado correctamente');
+			console.log(validationResult(req).isEmpty());
+			
+			if(!validationResult(req).isEmpty()) {
+				await Usuario.create({
+					nombre: req.body.nombre,
+					pass: req.body.pass,
+				});
+				
+				res.redirect('/usuario');
+			} else {
+				res.redirect('/usuario');
+			}
 
 		} catch(e) {
 			res.send('Error ' + e);
@@ -53,7 +64,7 @@ module.exports = {
 				}
 			});
 
-			res.send('Usuario borrado correctamente');
+			res.redirect('/usuario');
 
 		} catch(e) {
 			res.send('Error ' + e);

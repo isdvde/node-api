@@ -4,8 +4,8 @@ const { check, validationResult } = require('express-validator');
 module.exports = {
 
 	validation: [
-		check('nombre').exists(),
-		check('pass').exists(),
+		check('nombre').not().isEmpty(),
+		check('pass').not().isEmpty(),
 	],
 	
 	index: async (req, res) => {
@@ -20,9 +20,7 @@ module.exports = {
 
 	store: async (req, res) => {
 		try {
-			console.log(validationResult(req).isEmpty());
-			
-			if(!validationResult(req).isEmpty()) {
+			if(validationResult(req).isEmpty()) {
 				await Usuario.create({
 					nombre: req.body.nombre,
 					pass: req.body.pass,

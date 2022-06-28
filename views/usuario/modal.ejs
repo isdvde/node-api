@@ -17,7 +17,7 @@
 							
 							<div class="mb-3">
 								<label class="form-label">Contraseña</label>
-								<input name="pass" type="password" class="form-control">
+								<input name="pass" type="password" class="form-control" <%if(edit){%> value="<%= nombre %>" <%}%> >
 								<!-- <input type="password" class="form-control"> -->
 							</div>
 							

@@ -1,35 +1,50 @@
-<!-- Modal -->
 <div class="modal fade" id="modalCreate" tabindex="-1" aria-labelledby="modalCreateLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="modalCreateLabel">Agregar</h5>
 			</div>
-			<form action="/usuario/store" method="post">
+
+			<%if(locals.edit){%>
+				<form action="/usuario/update/<%=id%>" method="post">
+			<%}else{%>
+				<form action="/usuario/store" method="post">
+			<%}%>
+
 			<div class="modal-body">
 				<div class="card text-center">
 					<div class="card-body">
 							<div class="mb-3">
 								<label class="form-label">Nombre</label>
-								<input name="nombre" type="text" class="form-control">
-								<!-- <input type="text" class="form-control"> -->
+								<input name="nombre" type="text" class="form-control" <%if(locals.edit){%>value="<%=locals.nombre%>"<%}%>>
 							</div>
 							
 							<div class="mb-3">
 								<label class="form-label">Contraseña</label>
-								<input name="pass" type="password" class="form-control" <%if(edit){%> value="<%= nombre %>" <%}%> >
-								<!-- <input type="password" class="form-control"> -->
+								<input name="pass" type="password" class="form-control" <%if(locals.edit){%>value="<%=locals.pass%>"<%}%> >
 							</div>
 							
 						</div>
 					</div>
-					
 				</div>
+				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+					<%if(locals.edit){%>
+						<a href="/usuario" class="btn btn-secondary">Cerrar</a>
+					<%}else{%>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+					<%}%>
 					<button type="submit" class="btn btn-primary">Guardar</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
+
+<%if(locals.edit){%>
+<script>
+	$(window).load(function(){        
+		$('#modalCreate').modal('show');
+	 }); 
+</script>
+<%}%>

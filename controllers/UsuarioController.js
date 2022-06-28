@@ -2,20 +2,44 @@ const Usuario = require('../models/Usuario.js');
 const { check, validationResult } = require('express-validator');
 
 module.exports = {
-
 	validation: [
 		check('nombre').not().isEmpty(),
 		check('pass').not().isEmpty(),
 	],
 	
 	index: async (req, res) => {
-		const u = await Usuario.findAll({
+		const usuarios = await Usuario.findAll({
 			order: [
 				['id', 'asc'],
 			],
 			raw: true,
 		});
-		res.render('usuario/index', {usuarios: u});
+		res.render('usuario/index', { usuarios: usuarios, });
+	},
+
+	edit: async (req, res) => {
+		const usuarios = await Usuario.findAll({
+			order: [
+				['id', 'asc'],
+			],
+			raw: true,
+		});
+		const usuario = await Usuario.findOne({
+			order: [
+				['id', 'asc'],
+			],
+			raw: true,
+			where: {
+				id: req.params.id,
+			}
+		});
+		res.render('usuario/index', {
+			usuarios: usuarios,
+			edit: true,
+			nombre: usuario.nombre,
+			pass: usuario.pass,
+			id: usuario.id
+		});
 	},
 
 	store: async (req, res) => {
@@ -25,12 +49,10 @@ module.exports = {
 					nombre: req.body.nombre,
 					pass: req.body.pass,
 				});
-				
 				res.redirect('/usuario');
 			} else {
 				res.redirect('/usuario');
 			}
-
 		} catch(e) {
 			res.send('Error ' + e);
 		}
@@ -46,8 +68,7 @@ module.exports = {
 					id: req.params.id
 				}
 			});
-
-			res.send('Usuario actualizado correctamente');
+			res.redirect('/usuario');
 
 		} catch(e) {
 			res.send('Error ' + e)
@@ -61,9 +82,7 @@ module.exports = {
 					id: req.params.id
 				}
 			});
-
 			res.redirect('/usuario');
-
 		} catch(e) {
 			res.send('Error ' + e);
 		}

@@ -8,30 +8,15 @@ module.exports = {
 	],
 	
 	index: async (req, res) => {
-		const usuarios = await Usuario.findAll({
-			order: [
-				['id', 'asc'],
-			],
-			raw: true,
-		});
+		const usuarios = await Usuario.find({});
+		console.log(usuarios);
 		res.render('usuario/index', { usuarios: usuarios, });
 	},
 
 	edit: async (req, res) => {
-		const usuarios = await Usuario.findAll({
-			order: [
-				['id', 'asc'],
-			],
-			raw: true,
-		});
-		const usuario = await Usuario.findOne({
-			order: [
-				['id', 'asc'],
-			],
-			raw: true,
-			where: {
-				id: req.params.id,
-			}
+		const usuarios = await Usuario.find({});
+		const usuario = await Usuario.findOne().where({ 
+			"_id": req.params.id, 
 		});
 		res.render('usuario/index', {
 			usuarios: usuarios,
@@ -61,12 +46,10 @@ module.exports = {
 	update: async (req, res) => {
 		try {
 			await Usuario.update({
+				"_id": req.params.id,
+			},{
 				nombre: req.body.nombre,
 				pass: req.body.pass,
-			},{
-				where: {
-					id: req.params.id
-				}
 			});
 			res.redirect('/usuario');
 
@@ -77,11 +60,7 @@ module.exports = {
 
 	destroy: async (req, res) => {
 		try {
-			await Usuario.destroy({
-				where: {
-					id: req.params.id
-				}
-			});
+			await Usuario.deleteOne({ "_id": req.params.id });
 			res.redirect('/usuario');
 		} catch(e) {
 			res.send('Error ' + e);

@@ -8,7 +8,6 @@ var app = require('../app');
 var debug = require('debug')('users:server');
 var http = require('http');
 const db = require('../db/db.js');
-// const Usuario = require('../models/Usuario.js');
 
 /**
  * Get port from environment and store in Express.
@@ -28,8 +27,7 @@ var server = http.createServer(app);
  */
 
 async function main() {
-
-	// await db.sync({ force: true });
+	// db.then(() => { console.log("Conectado a BD") }).catch(e => console.log(e));
 
  	server.listen(port);
  	server.on('error', onError);

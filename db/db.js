@@ -1,10 +1,6 @@
-const { Sequelize } = require('sequelize');
+const db = require('mongoose');
 
-
-// Option 3: Passing parameters separately (other dialects)
-const db = new Sequelize('usuarios', 'admin', 'admin', {
-  host: 'localhost',
-  dialect: 'postgres'
+module.exports = db.connect("mongodb://127.0.0.1:27017/usuarios", {
+  useNewUrlParser: true, 
+  useUnifiedTopology: true
 });
-
-module.exports = db;
